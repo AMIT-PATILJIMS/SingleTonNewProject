@@ -15,6 +15,10 @@ namespace SingleTonNewProject
         {
             get
             {
+                /*
+                 This is known as lazy initialization in Singleton design pattern. 
+                 But it will not work in multi-threaded environment.
+                 */
                 if (instance == null)
                 {
                     instance = new SingletonDemo();
