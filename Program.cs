@@ -13,6 +13,12 @@ namespace SingleTonNewProject
             SingletonDemo fromStudent = SingletonDemo.GetInsurance;
 
             fromStudent.PrintDetails("From student");
+
+            Console.WriteLine("-------------------------------------");
+
+            SingletonDemo.NewClass DerivedClass = new SingletonDemo.NewClass();
+
+            DerivedClass.PrintDetails("From Derived");
         }
     }
 }

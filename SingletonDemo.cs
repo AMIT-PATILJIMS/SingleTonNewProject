@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SingleTonNewProject
 {
-    internal sealed class SingletonDemo
+    public class SingletonDemo
     {
         private static int counter = 0;
 
@@ -31,6 +31,11 @@ namespace SingleTonNewProject
         public void PrintDetails(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public class NewClass : SingletonDemo
+        {
+            
         }
     }
 }
