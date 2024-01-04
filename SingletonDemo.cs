@@ -11,17 +11,31 @@ namespace SingleTonNewProject
         private static int counter = 0;
 
         private static SingletonDemo instance = null;
-        public static SingletonDemo GetInsurance
+
+        private static readonly object obj = new object();
+        public static SingletonDemo GetInstance
         {
             get
             {
                 /*
-                 This is known as lazy initialization in Singleton design pattern. 
-                 But it will not work in multi-threaded environment.
+                 * Since lock is very expensive operation, that's why we use Double check locking.
                  */
                 if (instance == null)
                 {
-                    instance = new SingletonDemo();
+                    /*
+                     * lock is very expensive operation, we should avoid this.
+                     */
+                    lock (obj)
+                    {
+                        /*
+                         This is known as lazy initialization in Singleton design pattern. 
+                         But it will not work in multi-threaded environment.
+                         */
+                        if (instance == null)
+                        {
+                            instance = new SingletonDemo();
+                        }
+                    }
                 }
                 return instance;
             }
@@ -35,11 +49,6 @@ namespace SingleTonNewProject
         public void PrintDetails(string message)
         {
             Console.WriteLine(message);
-        }
-
-        public class NewClass : SingletonDemo
-        {
-            
         }
     }
 }

@@ -6,19 +6,21 @@ namespace SingleTonNewProject
     {
         static void Main(string[] args)
         {
-            SingletonDemo fromEmplyee = SingletonDemo.GetInsurance;
+            Parallel.Invoke(() => NewStudent(), () => NewEmployee());
+        }
 
-            fromEmplyee.PrintDetails("From Employee");
-
-            SingletonDemo fromStudent = SingletonDemo.GetInsurance;
+        private static void NewStudent()
+        {
+            SingletonDemo fromStudent = SingletonDemo.GetInstance;
 
             fromStudent.PrintDetails("From student");
+        }
 
-            Console.WriteLine("-------------------------------------");
+        private static void NewEmployee()
+        {
+            SingletonDemo fromEmplyee = SingletonDemo.GetInstance;
 
-            SingletonDemo.NewClass DerivedClass = new SingletonDemo.NewClass();
-
-            DerivedClass.PrintDetails("From Derived");
+            fromEmplyee.PrintDetails("From Employee");
         }
     }
 }
