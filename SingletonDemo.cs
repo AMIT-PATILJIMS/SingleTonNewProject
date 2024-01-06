@@ -6,37 +6,27 @@ using System.Threading.Tasks;
 
 namespace SingleTonNewProject
 {
+    // 1. Now we converting class from Lazy Initialization to Non - Lazy Initialization (Eager Loading).
     public class SingletonDemo
     {
         private static int counter = 0;
+        /*2. We need to change this null initialization to new SingletonDemo() instance.
+          3. We need to change this instance property to readonly.
+        */
+        private static readonly SingletonDemo instance = new SingletonDemo();
 
-        private static SingletonDemo instance = null;
-
-        private static readonly object obj = new object();
         public static SingletonDemo GetInstance
         {
+            /*
+             4. Remove this double check locking.
+             */
             get
             {
-                /*
-                 * Since lock is very expensive operation, that's why we use Double check locking.
-                 */
-                if (instance == null)
-                {
-                    /*
-                     * lock is very expensive operation, we should avoid this.
-                     */
-                    lock (obj)
-                    {
-                        /*
-                         This is known as lazy initialization in Singleton design pattern. 
-                         But it will not work in multi-threaded environment.
-                         */
-                        if (instance == null)
-                        {
-                            instance = new SingletonDemo();
-                        }
-                    }
-                }
+                //5. Now the debugger had hit this application twice due to parallel invoke.
+                //6. If you observe the output the counter value is still one.
+                //7. Eager loading has created only one singleton instance.
+                //8. How this is thread safe ? Answer : The CLR (Common Language Runtime) takes care of this.
+                
                 return instance;
             }
         }
