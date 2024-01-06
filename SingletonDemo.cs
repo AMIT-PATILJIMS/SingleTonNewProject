@@ -6,28 +6,24 @@ using System.Threading.Tasks;
 
 namespace SingleTonNewProject
 {
-    // 1. Now we converting class from Lazy Initialization to Non - Lazy Initialization (Eager Loading).
+    // 1. Now we converting class from Non - Lazy Initialization (Eager Loading) to Lazy Initialization.
     public class SingletonDemo
     {
         private static int counter = 0;
-        /*2. We need to change this null initialization to new SingletonDemo() instance.
-          3. We need to change this instance property to readonly.
+        /*
+         2. We will use Lazy keyword in .Net 4.0
+         3. After that create the instance using lambda expression.
         */
-        private static readonly SingletonDemo instance = new SingletonDemo();
+        private static readonly Lazy<SingletonDemo> instance = new Lazy<SingletonDemo>(() => new SingletonDemo());
 
         public static SingletonDemo GetInstance
         {
-            /*
-             4. Remove this double check locking.
-             */
             get
             {
-                //5. Now the debugger had hit this application twice due to parallel invoke.
-                //6. If you observe the output the counter value is still one.
-                //7. Eager loading has created only one singleton instance.
-                //8. How this is thread safe ? Answer : The CLR (Common Language Runtime) takes care of this.
-                
-                return instance;
+                /*
+                 * 4. In order to get singleton instance we need to return value.
+                 */
+                return instance.Value;
             }
         }
 
